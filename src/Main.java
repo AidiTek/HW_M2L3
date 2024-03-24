@@ -7,7 +7,17 @@ public class Main {
                 account.withdraw(6000);
             }
         } catch (LimitException e) {
-            System.out.println("Ошибка: " + e.getMessage() + ". Доступная сумма: " + e.getRemainingAmount() + " сом.");
+            double remainingAmount = e.getRemainingAmount();
+            System.out.println("Ошибка: " + e.getMessage() + ". Доступная сумма: " + remainingAmount + " сом.");
+
+
+            try {
+                account.withdraw(remainingAmount);
+                System.out.println("Снято оставшееся на счете: " + remainingAmount + " сом.");
+            } catch (LimitException ex) {
+                System.out.println("Ошибка при снятии остатка: " + ex.getMessage());
+            }
+            System.out.println("На счете осталось 0 сом.");
         }
     }
 }
